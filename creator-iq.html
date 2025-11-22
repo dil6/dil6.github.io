@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorIQ CTO Strategy</title>
+    <style>
+        :root {
+            --bg-dark: #020617;
+            --bg-card: #0f172a;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #0ea5e9;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            flex: 1;
+            padding: 60px 80px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .accent-text {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-marker {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .timeline-content h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        ul li {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .pill {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 80px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .navigation {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table th {
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .table td {
+            color: var(--text-secondary);
+        }
+
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .org-level {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .org-box {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .org-box-title {
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .org-box-count {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid var(--accent-primary);
+        }
+
+        .speaker-notes {
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .split-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .comparison {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-column {
+            flex: 1;
+        }
+
+        .comparison-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .number-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-primary);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 40px 60px;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-content" style="text-align: center; justify-content: center;">
+                <h1>CreatorIQ CTO Strategy</h1>
+                <p class="subtitle">Building a Next-Generation Platform for Global Scale</p>
+                <div style="margin-top: 3rem;">
+                    <div class="pill">Growth-stage SaaS</div>
+                    <div class="pill">1,300+ Enterprise Customers</div>
+                    <div class="pill">85+ Countries</div>
+                </div>
+                <p style="margin-top: 3rem; font-size: 1rem; color: var(--text-muted);">Executive Leadership Presentation</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>The Four Pillars</h2>
+                <p class="subtitle">Core Responsibilities as Chief Technology Officer</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <div class="icon-box">🏗️</div>
+                        <h3>Technology &amp; Architecture</h3>
+                        <p>Modernize platform with Creator Graph—decoupling data from delivery for global scale and zero-downtime evolution.</p>
+                        <div class="badge" style="margin-top: 1rem;">5 minutes</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">👥</div>
+                        <h3>Engineering Culture</h3>
+                        <p>Build Mission Pods with clear ownership, autonomy, and accountability to move faster at enterprise scale.</p>
+                        <div class="badge" style="margin-top: 1rem;">5 minutes</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">🤝</div>
+                        <h3>M&amp;A Integration</h3>
+                        <p>Develop repeatable playbook for evaluating and integrating acquisitions that accelerate strategic goals.</p>
+                        <div class="badge" style="margin-top: 1rem;">4 minutes</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">🤖</div>
+                        <h3>AI Strategy</h3>
+                        <p>Leverage 10 years of proprietary creator data as our competitive moat—data-first AI advantage.</p>
+                        <div class="badge" style="margin-top: 1rem;">6 minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Inflection Point -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>The Inflection Point</h2>
+                <p class="subtitle">Why This Transition Matters Now</p>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">CreatorIQ is at a critical junction</h3>
+                    <p style="font-size: 1.25rem; line-height: 1.8;">With <span class="accent-text">1,300+ enterprise customers</span> across <span class="accent-text">85+ countries</span>, we've proven product-market fit. Now we need to <span class="accent-text">scale the platform</span> without breaking what works.</p>
+                </div>
+                <div class="grid-3" style="margin-top: 3rem;">
+                    <div class="metric">
+                        <div class="metric-value">60</div>
+                        <div class="metric-label">Engineers</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">1,300+</div>
+                        <div class="metric-label">Customers</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">85+</div>
+                        <div class="metric-label">Countries</div>
+                    </div>
+                </div>
+                <ul style="margin-top: 2rem;">
+                    <li>Balance velocity with reliability at enterprise scale</li>
+                    <li>Prepare architecture for AI-native features and global expansion</li>
+                    <li>Build organizational clarity to unlock team potential</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Current State Assessment -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Current State Assessment</h2>
+                <p class="subtitle">Platform Architecture Analysis</p>
+                <div class="comparison" style="margin-top: 2rem;">
+                    <div class="comparison-column">
+                        <div class="comparison-header" style="color: var(--text-primary); border-color: var(--border-color);">✅ Strengths</div>
+                        <ul>
+                            <li>Proven product with enterprise customers</li>
+                            <li>10 years of proprietary creator data</li>
+                            <li>Strong engineering talent</li>
+                            <li>Market leadership position</li>
+                            <li>Global operational scale</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-column">
+                        <div class="comparison-header" style="color: var(--accent-primary);">🎯 Opportunities</div>
+                        <ul>
+                            <li>Monolithic architecture limits velocity</li>
+                            <li>Data layer coupled with application logic</li>
+                            <li>No unified API strategy for partners</li>
+                            <li>AI/ML infrastructure needs foundation</li>
+                            <li>Org structure can enable faster execution</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <p style="font-size: 1.125rem;"><strong>Bottom Line:</strong> We have the ingredients for massive scale. We need the <span class="accent-text">architectural foundation</span> and <span class="accent-text">organizational structure</span> to get there.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Architecture Vision -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Architecture Vision: The Creator Graph</h2>
+                <p class="subtitle">Decouple Data from Delivery</p>
+                <div class="card" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(14, 165, 233, 0.02) 100%); border: 2px solid var(--accent-primary);">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">The Creator Graph</h3>
+                    <p style="text-align: center; font-size: 1.25rem; margin-bottom: 2rem;">A unified, queryable knowledge graph of creators, content, campaigns, and relationships</p>
+                    <div class="grid-3">
+                        <div style="text-align: center;">
+                            <div class="icon-box" style="margin: 0 auto 1rem;">📊</div>
+                            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">Discovery Service</h4>
+                            <p style="font-size: 0.95rem;">Find creators based on any attribute or relationship</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="icon-box" style="margin: 0 auto 1rem;">⚡</div>
+                            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">Execution Service</h4>
+                            <p style="font-size: 0.95rem;">Manage campaigns and creator relationships</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="icon-box" style="margin: 0 auto 1rem;">📈</div>
+                            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">Analytics Service</h4>
+                            <p style="font-size: 0.95rem;">Measure performance and ROI across campaigns</p>
+                        </div>
+                    </div>
+                </div>
+                <ul style="margin-top: 2rem;">
+                    <li>Single source of truth for all creator and campaign data</li>
+                    <li>Powers web app, mobile app, API, and AI features from one foundation</li>
+                    <li>Enables new product surfaces without rebuilding core logic</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Data Architecture Evolution -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Data Architecture Evolution</h2>
+                <p class="subtitle">From Monolith to Composable Services</p>
+                <div class="comparison" style="margin-top: 2rem;">
+                    <div class="comparison-column">
+                        <div class="comparison-header" style="border-color: var(--border-color); color: var(--text-secondary);">Current State</div>
+                        <div class="card" style="background: rgba(255, 255, 255, 0.02);">
+                            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Monolithic Application</h4>
+                            <ul style="font-size: 1rem;">
+                                <li style="font-size: 1rem;">Data coupled with UI logic</li>
+                                <li style="font-size: 1rem;">Hard to scale independently</li>
+                                <li style="font-size: 1rem;">Changes require full deploys</li>
+                                <li style="font-size: 1rem;">Limited API flexibility</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="comparison-column">
+                        <div class="comparison-header">Target State</div>
+                        <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border-color: var(--accent-primary);">
+                            <h4 style="margin-bottom: 1rem;">Creator Graph + Services</h4>
+                            <ul style="font-size: 1rem;">
+                                <li style="font-size: 1rem;">Data layer independent of apps</li>
+                                <li style="font-size: 1rem;">Services scale independently</li>
+                                <li style="font-size: 1rem;">Zero-downtime migrations</li>
+                                <li style="font-size: 1rem;">Rich, versioned APIs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <h3>The Strangler Fig Pattern</h3>
+                    <p>Incrementally replace legacy systems with new services, maintaining 100% uptime for customers. No big-bang rewrites.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Migration Path -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Microservices Migration Path</h2>
+                <p class="subtitle">Phased Approach with Zero Downtime</p>
+                <div class="timeline" style="margin-top: 3rem;">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">Q1</div>
+                        <div class="timeline-content">
+                            <h4>Foundation</h4>
+                            <p>API Facade &amp; Discovery Service design</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">Q2</div>
+                        <div class="timeline-content">
+                            <h4>Acceleration</h4>
+                            <p>Discovery Service launch &amp; Embeddings training</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">Q3</div>
+                        <div class="timeline-content">
+                            <h4>Scale</h4>
+                            <p>Creator Graph v1 &amp; Execution Service design</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">Q4</div>
+                        <div class="timeline-content">
+                            <h4>Strategic</h4>
+                            <p>AI features &amp; APAC support</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-top: 3rem;">
+                    <div class="card">
+                        <h3>Phase 1: Facade Pattern</h3>
+                        <p>Add API layer in front of monolith. All new features go through facade. Begin data extraction.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Phase 2: Extract Services</h3>
+                        <p>Move Discovery Service to Creator Graph. Route traffic through facade. Monitor and validate.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Phase 3: Expand Graph</h3>
+                        <p>Migrate campaign and analytics data. Build Execution Service. Scale infrastructure.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Phase 4: Retire Legacy</h3>
+                        <p>Incrementally decommission monolith components. Customers see zero disruption.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Organization Structure Today -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Organization Structure Today</h2>
+                <p class="subtitle">Current Engineering Organization</p>
+                <div class="org-chart" style="margin-top: 2rem;">
+                    <div class="org-level">
+                        <div class="org-box" style="border-color: var(--accent-primary); background: rgba(56, 189, 248, 0.1);">
+                            <div class="org-box-title">CTO</div>
+                            <div class="org-box-count">1 person</div>
+                        </div>
+                    </div>
+                    <div class="org-level">
+                        <div class="org-box">
+                            <div class="org-box-title">Frontend Team</div>
+                            <div class="org-box-count">~20 engineers</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">Backend Team</div>
+                            <div class="org-box-count">~25 engineers</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">DevOps/Infra</div>
+                            <div class="org-box-count">~8 engineers</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">QA</div>
+                            <div class="org-box-count">~7 engineers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 3rem;">
+                    <h3>Challenge: Function-Based Silos</h3>
+                    <ul style="margin-top: 1rem;">
+                        <li>Work passes through multiple teams, creating bottlenecks</li>
+                        <li>Unclear ownership for end-to-end feature delivery</li>
+                        <li>Dependencies slow down execution and reduce autonomy</li>
+                        <li>Hard to measure team impact on business outcomes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Recommended Structure -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Recommended Structure: Mission Pods</h2>
+                <p class="subtitle">Cross-Functional Teams Aligned to Business Outcomes</p>
+                <div class="org-chart" style="margin-top: 2rem;">
+                    <div class="org-level">
+                        <div class="org-box" style="border-color: var(--accent-primary); background: rgba(56, 189, 248, 0.1);">
+                            <div class="org-box-title">CTO</div>
+                            <div class="org-box-count">Leadership</div>
+                        </div>
+                    </div>
+                    <div class="org-level">
+                        <div class="org-box">
+                            <div class="org-box-title">Discovery Pod</div>
+                            <div class="org-box-count">12-15 people</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">Campaigns Pod</div>
+                            <div class="org-box-count">12-15 people</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">Analytics Pod</div>
+                            <div class="org-box-count">10-12 people</div>
+                        </div>
+                        <div class="org-box">
+                            <div class="org-box-title">Platform Pod</div>
+                            <div class="org-box-count">10-12 people</div>
+                        </div>
+                    </div>
+                    <div class="org-level">
+                        <div class="org-box" style="border-color: var(--text-muted);">
+                            <div class="org-box-title" style="color: var(--text-muted);">AI/ML Pod</div>
+                            <div class="org-box-count">6-8 people (new)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <h3>Each Pod Includes</h3>
+                        <ul>
+                            <li>Product Manager</li>
+                            <li>Tech Lead</li>
+                            <li>Backend Engineers</li>
+                            <li>Frontend Engineers</li>
+                            <li>QA Engineer</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Benefits</h3>
+                        <ul>
+                            <li>Clear ownership &amp; accountability</li>
+                            <li>Faster decisions &amp; execution</li>
+                            <li>Direct business impact metrics</li>
+                            <li>Reduced cross-team dependencies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Q1 2026 Roadmap -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Engineering Roadmap Q1 2026</h2>
+                <p class="subtitle">First Quarter Priorities</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <div class="number-circle">1</div>
+                        <h3 style="display: inline;">API Facade Layer</h3>
+                        <p style="margin-top: 1rem;">Create unified API layer in front of monolith. Define service boundaries. Enable gradual migration.</p>
+                        <div class="pill" style="margin-top: 1rem;">Foundation</div>
+                    </div>
+                    <div class="card">
+                        <div class="number-circle">2</div>
+                        <h3 style="display: inline;">Discovery Service Design</h3>
+                        <p style="margin-top: 1rem;">Architect Creator Graph data model. Define API contracts. Plan migration strategy.</p>
+                        <div class="pill" style="margin-top: 1rem;">Architecture</div>
+                    </div>
+                    <div class="card">
+                        <div class="number-circle">3</div>
+                        <h3 style="display: inline;">Organization Transition</h3>
+                        <p style="margin-top: 1rem;">Form Mission Pods. Establish ownership. Define success metrics and OKRs.</p>
+                        <div class="pill" style="margin-top: 1rem;">Culture</div>
+                    </div>
+                    <div class="card">
+                        <div class="number-circle">4</div>
+                        <h3 style="display: inline;">Hiring Pipeline</h3>
+                        <p style="margin-top: 1rem;">Recruit ML engineers, backend engineers, and DevOps specialists. Build talent pipeline.</p>
+                        <div class="pill" style="margin-top: 1rem;">Team Building</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <p><strong>Success Metric:</strong> By end of Q1, API facade handles 25% of production traffic with zero customer-facing incidents.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: 18-Month Roadmap -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>18-Month Technical Roadmap</h2>
+                <p class="subtitle">2026 Quarterly Breakdown</p>
+                <table class="table" style="margin-top: 2rem;">
+                    <thead>
+                        <tr>
+                            <th>Quarter</th>
+                            <th>Architecture</th>
+                            <th>AI/ML</th>
+                            <th>Organization</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Q1 2026</strong></td>
+                            <td>API Facade, Discovery Service design</td>
+                            <td>ML infrastructure setup, data pipeline</td>
+                            <td>Form Mission Pods, hire 4 engineers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q2 2026</strong></td>
+                            <td>Discovery Service launch (beta)</td>
+                            <td>Train embeddings, conversational search</td>
+                            <td>Hire 3 engineers, establish pod metrics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q3 2026</strong></td>
+                            <td>Creator Graph v1, Execution Service design</td>
+                            <td>Brand safety AI, campaign brief generation</td>
+                            <td>Hire 3 engineers, refine pod structure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q4 2026</strong></td>
+                            <td>Execution Service launch, global scale</td>
+                            <td>AI features in production, embeddings v2</td>
+                            <td>Full team in place, performance reviews</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q1-Q2 2027</strong></td>
+                            <td>Analytics Service, legacy decommission</td>
+                            <td>AI Marketing Agent (moonshot), expand AI</td>
+                            <td>Scale pods, evaluate M&amp;A opportunities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 12: Hiring & Retention -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Hiring &amp; Retention Strategy</h2>
+                <p class="subtitle">Building the Team for Scale</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div>
+                        <h3>2026 Hiring Plan</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Count</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ML Engineers</td>
+                                    <td>2</td>
+                                    <td><span class="badge">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Backend Engineers</td>
+                                    <td>3</td>
+                                    <td><span class="badge">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>DevOps Engineers</td>
+                                    <td>2</td>
+                                    <td><span class="badge">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>QA Engineers</td>
+                                    <td>2</td>
+                                    <td><span class="badge">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Technical Recruiter</td>
+                                    <td>1</td>
+                                    <td><span class="badge">High</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>Retention Strategies</h3>
+                        <div class="card">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">🎯 Clear Career Paths</h4>
+                            <p style="font-size: 1rem;">Technical and leadership tracks with defined progression criteria</p>
+                        </div>
+                        <div class="card" style="margin-top: 1rem;">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">🚀 Ownership &amp; Impact</h4>
+                            <p style="font-size: 1rem;">Mission Pods give engineers direct business impact and autonomy</p>
+                        </div>
+                        <div class="card" style="margin-top: 1rem;">
+                            <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">📚 Learning &amp; Growth</h4>
+                            <p style="font-size: 1rem;">Conference budget, training programs, and cutting-edge technology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: M&A Integration -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>M&amp;A Integration Playbook</h2>
+                <p class="subtitle">Repeatable Framework for Evaluating Acquisitions</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <h3>Evaluation Criteria</h3>
+                        <ul>
+                            <li><strong>Strategic Fit:</strong> Accelerates Creator Graph or AI roadmap</li>
+                            <li><strong>Technical Debt:</strong> Architecture quality and maintainability</li>
+                            <li><strong>Team Talent:</strong> Retain key engineers and domain experts</li>
+                            <li><strong>Data Assets:</strong> Proprietary datasets that enhance our moat</li>
+                            <li><strong>Integration Cost:</strong> Time and resources to unify systems</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Integration Process</h3>
+                        <div style="margin-top: 1rem;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <div class="pill">Week 1-2</div>
+                                <p style="margin-top: 0.5rem; font-size: 1rem;">Technical due diligence, architecture audit</p>
+                            </div>
+                            <div style="margin-bottom: 1.5rem;">
+                                <div class="pill">Week 3-4</div>
+                                <p style="margin-top: 0.5rem; font-size: 1rem;">Team integration, culture alignment</p>
+                            </div>
+                            <div style="margin-bottom: 1.5rem;">
+                                <div class="pill">Month 2-3</div>
+                                <p style="margin-top: 0.5rem; font-size: 1rem;">API integration, data migration planning</p>
+                            </div>
+                            <div>
+                                <div class="pill">Month 4-6</div>
+                                <p style="margin-top: 0.5rem; font-size: 1rem;">Full integration into Creator Graph</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <h3>Target Acquisition Profiles</h3>
+                    <p>Companies with AI/ML expertise, creator data platforms, or specialized analytics capabilities that complement our core offering.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: AI Strategy -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>AI Strategy: The Real Moat</h2>
+                <p class="subtitle">Data-First Competitive Advantage</p>
+                <div class="highlight-box" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(14, 165, 233, 0.1) 100%); border-color: var(--accent-primary); border-width: 2px;">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">Our Thesis: Data is the Moat, Not the Model</h3>
+                    <p style="font-size: 1.25rem; line-height: 1.8;">Foundation models (GPT, Claude, Gemini) are commoditizing. But <span class="accent-text">10 years of proprietary creator performance data</span> across <span class="accent-text">1,300+ brands</span> is irreplaceable.</p>
+                </div>
+                <div class="grid-3" style="margin-top: 2rem;">
+                    <div class="metric">
+                        <div class="metric-value">10</div>
+                        <div class="metric-label">Years of Data</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">1,300+</div>
+                        <div class="metric-label">Brands</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">Millions</div>
+                        <div class="metric-label">Creator Profiles</div>
+                    </div>
+                </div>
+                <ul style="margin-top: 2rem;">
+                    <li>Fine-tune models on our proprietary creator performance data</li>
+                    <li>Build embeddings from Creator Graph relationships</li>
+                    <li>Create AI features competitors cannot replicate</li>
+                    <li>Focus on practical AI that drives customer ROI, not hype</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 15: AI Roadmap Tier 1 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>AI Roadmap: Tier 1 (Near-Term)</h2>
+                <p class="subtitle">2026 Quick Wins with High Customer Impact</p>
+                <div class="grid-3" style="margin-top: 2rem;">
+                    <div class="card">
+                        <div class="icon-box">🛡️</div>
+                        <h3>Multimodal Brand Safety</h3>
+                        <p>Automatically scan creator content (text, image, video) for brand safety violations. Use vision models to detect unsafe content.</p>
+                        <div class="badge" style="margin-top: 1rem;">Q2 2026</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">💬</div>
+                        <h3>Conversational Search</h3>
+                        <p>Natural language queries to find creators. "Show me fitness creators in LA with 100k+ followers who work with Nike."</p>
+                        <div class="badge" style="margin-top: 1rem;">Q2 2026</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">🔔</div>
+                        <h3>Always-On Brand Mentions</h3>
+                        <p>AI monitors social platforms for brand mentions in creator content. Real-time alerts and sentiment analysis.</p>
+                        <div class="badge" style="margin-top: 1rem;">Q3 2026</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <p><strong>Customer Impact:</strong> These features directly reduce manual work and increase campaign safety—clear ROI that justifies price increases.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: AI Roadmap Tier 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>AI Roadmap: Tier 2 (Medium-Term)</h2>
+                <p class="subtitle">Embeddings and Strategic AI Features</p>
+                <div class="card" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border: 2px solid var(--accent-primary);">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">🧠 Creator Graph Embeddings</h3>
+                    <p style="font-size: 1.125rem; margin-bottom: 1rem;">The most strategically important AI initiative</p>
+                    <p>Train vector embeddings on the entire Creator Graph—creators, content, campaigns, brands, and relationships. Enable semantic search, recommendations, and similarity matching that no competitor can replicate.</p>
+                </div>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <div class="icon-box">📝</div>
+                        <h3>AI Campaign Brief Generation</h3>
+                        <p>Automatically generate campaign briefs based on brand goals, past performance, and creator insights. Save hours of manual work.</p>
+                        <div class="badge" style="margin-top: 1rem;">Q3-Q4 2026</div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">🔍</div>
+                        <h3>Competitor Landscape Intelligence</h3>
+                        <p>AI analyzes competitor campaigns and creator partnerships. Identify gaps and opportunities in market positioning.</p>
+                        <div class="badge" style="margin-top: 1rem;">Q4 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: AI Roadmap Tier 3 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>AI Roadmap: Tier 3 (Moonshot)</h2>
+                <p class="subtitle">The AI Marketing Agent</p>
+                <div class="highlight-box" style="margin-top: 2rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); border: 3px solid var(--accent-primary);">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">🤖 Autonomous AI Marketing Agent</h3>
+                    <p style="font-size: 1.25rem; text-align: center; margin-bottom: 2rem;">The future of creator marketing: An AI agent that plans, executes, and optimizes campaigns end-to-end</p>
+                </div>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div>
+                        <h3>What It Does</h3>
+                        <ul>
+                            <li>Understands brand goals and constraints</li>
+                            <li>Discovers optimal creators using embeddings</li>
+                            <li>Negotiates contracts and budgets</li>
+                            <li>Monitors campaign performance in real-time</li>
+                            <li>Optimizes spend and adjusts strategy</li>
+                            <li>Generates performance reports</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Timeline &amp; Approach</h3>
+                        <div class="card">
+                            <p style="margin-bottom: 1rem;"><strong>Q1-Q2 2027:</strong> Proof of concept with select customers</p>
+                            <p style="margin-bottom: 1rem;"><strong>Q3-Q4 2027:</strong> Beta launch with human oversight</p>
+                            <p><strong>2028:</strong> Full autonomous agent for qualified campaigns</p>
+                        </div>
+                        <div class="highlight-box" style="margin-top: 1rem; background: rgba(255, 255, 255, 0.05);">
+                            <p style="font-size: 0.95rem;"><strong>Risk Mitigation:</strong> Start with human-in-the-loop. Gradually increase autonomy as trust builds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Competitive Positioning -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Competitive Positioning</h2>
+                <p class="subtitle">CreatorIQ's Unfair Advantages</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border-color: var(--accent-primary);">
+                        <h3>🏆 Market Leadership</h3>
+                        <ul>
+                            <li>1,300+ enterprise customers</li>
+                            <li>85+ countries with operational presence</li>
+                            <li>Trusted by Fortune 500 brands</li>
+                            <li>10 years of market leadership</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border-color: var(--accent-primary);">
+                        <h3>📊 Proprietary Data Moat</h3>
+                        <ul>
+                            <li>10 years of creator performance data</li>
+                            <li>Millions of creator profiles</li>
+                            <li>Campaign effectiveness metrics</li>
+                            <li>Brand-creator relationship history</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border-color: var(--accent-primary);">
+                        <h3>🔒 Enterprise Trust</h3>
+                        <ul>
+                            <li>SOC 2 compliance and security maturity</li>
+                            <li>Global data privacy (GDPR, CCPA)</li>
+                            <li>24/7 enterprise support</li>
+                            <li>Proven reliability at scale</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%); border-color: var(--accent-primary);">
+                        <h3>🚀 First-Mover AI Advantage</h3>
+                        <ul>
+                            <li>Proprietary embeddings competitors can't copy</li>
+                            <li>AI features trained on our unique data</li>
+                            <li>Head start in AI marketing automation</li>
+                            <li>Network effects from customer data</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <p style="font-size: 1.125rem;"><strong>Bottom Line:</strong> Competitors can build features. They cannot replicate our <span class="accent-text">data</span>, <span class="accent-text">customer trust</span>, or <span class="accent-text">market position</span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Year 1 Impact -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Year 1 Impact &amp; Success Metrics</h2>
+                <p class="subtitle">Expected Outcomes by End of 2026</p>
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card">
+                        <h3>Technology Metrics</h3>
+                        <ul>
+                            <li><strong>API Facade:</strong> 75% of traffic through new architecture</li>
+                            <li><strong>Creator Graph:</strong> Discovery Service in production</li>
+                            <li><strong>Uptime:</strong> 99.95% availability maintained</li>
+                            <li><strong>Performance:</strong> 40% reduction in query latency</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Business Metrics</h3>
+                        <ul>
+                            <li><strong>Revenue:</strong> AI features drive 15% ARPU increase</li>
+                            <li><strong>Retention:</strong> Improved NRR from platform reliability</li>
+                            <li><strong>Expansion:</strong> API enables 3+ strategic partnerships</li>
+                            <li><strong>Sales:</strong> AI features in 50% of new deals</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Team Metrics</h3>
+                        <ul>
+                            <li><strong>Hiring:</strong> 10 new engineers on team</li>
+                            <li><strong>Retention:</strong> 95%+ engineering retention</li>
+                            <li><strong>Velocity:</strong> 30% increase in feature delivery</li>
+                            <li><strong>Satisfaction:</strong> 4.5+ eNPS score</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>AI Metrics</h3>
+                        <ul>
+                            <li><strong>Features:</strong> 3 AI features in production</li>
+                            <li><strong>Adoption:</strong> 60% of customers using AI features</li>
+                            <li><strong>Embeddings:</strong> V1 trained and deployed</li>
+                            <li><strong>Accuracy:</strong> 90%+ precision on brand safety</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Closing -->
+        <div class="slide">
+            <div class="slide-content" style="justify-content: center; text-align: center;">
+                <h2 style="font-size: 3rem; margin-bottom: 2rem;">Vision &amp; Commitment</h2>
+                <div class="highlight-box" style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(14, 165, 233, 0.1) 100%); border: 3px solid var(--accent-primary); margin: 2rem auto; max-width: 900px;">
+                    <p style="font-size: 1.5rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                        CreatorIQ has everything it needs to dominate creator marketing for the next decade: <span class="accent-text">market leadership</span>, <span class="accent-text">customer trust</span>, and <span class="accent-text">irreplaceable data</span>.
+                    </p>
+                    <p style="font-size: 1.5rem; line-height: 1.8;">
+                        My job is to build the <span class="accent-text">technology foundation</span> and <span class="accent-text">engineering culture</span> that turns those advantages into sustainable competitive moats.
+                    </p>
+                </div>
+                <div class="grid-2" style="margin-top: 3rem; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <div>
+                        <h3 style="margin-bottom: 1rem;">I Will Deliver</h3>
+                        <ul style="font-size: 1.125rem;">
+                            <li>Clear architectural vision</li>
+                            <li>Reliable, incremental execution</li>
+                            <li>Team alignment and empowerment</li>
+                            <li>Business-driven technology decisions</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 1rem;">I Need From You</h3>
+                        <ul style="font-size: 1.125rem;">
+                            <li>Trust to make bold technical bets</li>
+                            <li>Support for organizational changes</li>
+                            <li>Investment in AI/ML capabilities</li>
+                            <li>Partnership on M&amp;A strategy</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 3rem; font-size: 1.25rem; color: var(--text-secondary);">Let's build the future of creator marketing together.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>
+                <strong>CreatorIQ CTO Strategy</strong> · Executive Leadership Presentation
+            </div>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">20</span>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" id="prev-btn" onclick="previousSlide()" disabled>← Previous</button>
+                <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
+
+        totalSlidesSpan.textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+
+            currentSlideSpan.textContent = index + 1;
+
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
