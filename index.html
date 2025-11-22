@@ -1,127 +1,100 @@
+<!doctype html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-  
-  <title>Dilpreet's World</title>
-<link href="https://fonts.googleapis.com/css?family=Muli|Ovo" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-	
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>	
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dilpreet</title>
+  <meta name="description" content="Personal site — a quiet, elegant presence." />
+
+  <!-- Minimal, elegant styles (single-file) -->
+  <style>
+    :root{
+      --bg1:#f7f7fa;
+      --bg2:#fbfbff;
+      --accent:#0f172a;
+      --muted:rgba(15,23,42,0.55);
+      --glass: rgba(255,255,255,0.6);
+      --max-width:1100px;
+      --radius:18px;
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* page layout */
+    html,body{height:100%;margin:0}
+    body{
+      display:grid;place-items:center;min-height:100vh;padding:40px;background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    }
+
+    .card{
+      width:100%;max-width:var(--max-width);padding:48px 56px;border-radius:var(--radius);backdrop-filter:blur(6px) saturate(120%);
+      background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.6));box-shadow:0 10px 30px rgba(15,23,42,0.08);
+      border:1px solid rgba(15,23,42,0.04);
+      display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap
+    }
+
+    /* identity */
+    .brand{display:flex;flex-direction:column;gap:8px}
+    h1{font-size:clamp(28px,5.2vw,48px);margin:0;letter-spacing:-0.02em;color:var(--accent);font-weight:700}
+    p.lead{margin:0;color:var(--muted);font-size:clamp(14px,1.4vw,16px);max-width:60ch}
+
+    /* small nav / links */
+    nav{display:flex;gap:18px;align-items:center}
+    a.link{font-size:14px;text-decoration:none;color:var(--muted);padding:8px 12px;border-radius:12px;border:1px solid transparent}
+    a.link:hover{color:var(--accent);background:var(--glass);border-color:rgba(15,23,42,0.04)}
+
+    /* little ornament */
+    .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#06b6d4);box-shadow:0 6px 18px rgba(9,20,60,0.08)}
+
+    /* footer small */
+    .meta{font-size:13px;color:var(--muted);margin-top:18px}
+
+    @media (max-width:720px){
+      .card{padding:28px}
+      nav{width:100%;justify-content:flex-start}
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: no-preference){
+      h1{transform-origin:left center;animation:slideIn .9s cubic-bezier(.2,.9,.2,1) both}
+      @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    }
+  </style>
 </head>
 <body>
-<div id="GuestBook">
-	<h1 class="main-header"> Are you Dilpreet?</h1>
-	<h3 id="t">Do you want your email address? choose@dilpreet.com?</h3>
-	<h3 id="t">Do you want your website? dilpreet.com/choose?</h3>
-	<h3 id="t">For $5 per month, you can get one!</h3>
-<!-- Homepage -->
-<div class="container">
+  <main class="card" role="main">
+    <div class="brand">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div class="dot" aria-hidden="true"></div>
+        <h1 id="your-name">Your Name</h1>
+      </div>
+      <p class="lead">&ldquo;Designing products and thoughtful interfaces.&rdquo;</p>
 
-    <div class="left-block">
-        <div id="json" class="guestbook">
-            
-        </div>
-    
+      <div class="meta">Small updates: occasionally. <span aria-hidden="true">—</span> <a href="#contact" class="link">Contact</a></div>
     </div>
 
+    <nav aria-label="primary" style="margin-left:auto">
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#work">Work</a>
+      <a class="link" href="#notes">Notes</a>
+    </nav>
+  </main>
 
-	
-	
-    <div class="right-block">
-        <h1>Leave a message, for all the Dilpreet's!</h1>
-        <p>Your spam will be deleted, so don't waste your time.</p>
-        <div class="links">
-           <a href="#AllEntries">View All Messages</a>
-            <a href="#SignGuestBook">Leave a Message</a>
-	    <!--<a onClick="window.location.reload();">Refresh Guestbook</a>	-->
-           
-        </div>
-    </div>
-</div>
-	
-<div id="SignGuestBook" class="overlay">
-	<div id="SendForm" class="sign-guest-book-popup">
-		<h1>Leave a Message</h1>
-		<a class="close" href="#">&times;</a>
-		<div class="content">
-      <label style="display: block;
-    text-align: center;" class="aterisk_before" for="gform"> indicates a required field</label>
-      <br>
-		
-    <form name="gform" id="gform" enctype="text/plain" action="GOOGLE_FORM_URL" target="hidden_iframe" onsubmit="submitted=true;">
-      
-       <label for="GOOGLE_ENTRY_ID_Name"  class="aterisk_after">Name </label>
-      
-        <input class="form-element short" type="text" name="GOOGLE_ENTRY_ID_Name" id="GOOGLE_ENTRY_ID_Name" placeholder="Dilpreet" style="background: #5EC6C8;" required>
-      
-        <label for="GOOGLE_ENTRY_ID_Email">GitHub Username</label>
-      
-   
-        <input class="form-element short" type="text" name="GOOGLE_ENTRY_ID_Email" id="GOOGLE_ENTRY_ID_Email" placeholder="MarketingPip" style="background: #5EC6C8;">
-      
-   <label for="GOOGLE_ENTRY_ID_TextArea"  class="max-length">Guestbook Entry</label>
-      
-      <textarea class="form-element" name="GOOGLE_ENTRY_ID_TextArea" id="GOOGLE_ENTRY_ID_TextArea" rows="5" cols="30" oninvalid="this.setCustomValidity('You must sign the guestbook')"
-  oninput="this.setCustomValidity('')"  maxlength="50" placeholder="Enter Your Message Here" required></textarea>
-      
-         <label for="g-recaptcha"  class="aterisk_after">Captcha</label>      
-	 <div class="g-recaptcha"
-       data-sitekey="GOOGLE_Captcha_Key"></div>   
-      
-        <input class="form-button" type="submit" value="Submit">
-        <input class="form-button" type="reset" value="Reset Form">
- 
-    </form>
-		</div>
-	</div>
-</div>
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>	
-	
-<div id="AllEntries" class="overlay">
-	<div class="popup">
-		<h2>All Messages</h2>
-		<a class="close" href="#">&times;</a>
-		<div id="AllEntries_Content" class="content" style="height: 25em;overflow-y: auto;">
-	
-            </div>
-		</div>
-	</div>
-</div>
-</div>
+  <!-- tiny script to make edit easier -->
+  <script>
+    // Replace this name quickly from the console: setName('A. Person')
+    window.setName = function(name){
+      document.getElementById('your-name').textContent = name;
+    };
 
-</body>
-<script type="text/javascript">
-	
-	
-  // Put your Google Entry Form ID(s) Here
-  var GOOGLE_ENTRY_ID_Name="entry.1459190688";   // Name Entry ID
-		
- var GOOGLE_ENTRY_ID_Email="entry.2017750057";	// Email Entry ID
-		
-var GOOGLE_ENTRY_ID_Guestbook="entry.1791825215"; // Guestbook Entry ID
-    
-   // Put your Google Form Link Here  (Make sure to use correct link as documented)
-		
-		
-
-  var Google_Form_Link="https://docs.google.com/forms/d/1P4bHCUIxaZrnxyWMDOvt35ESwgW-Kc56MO3F1XYcCts/formResponse?"
-	
-	
-	 var Google_Form_ID="19QYnbT5m0Jn5W0ApgjIShr7DYpED8MAi6NahVlxZTEU"
-	 
-	 var Google_Form_Name="Form+Responses+1"  
-	
-  
-  // Google Recaptcha Key 
-	 
-	var CaptchaKey = "6LcmzH4gAAAAAAHKvR7hX8TkMcUsTlNzPU0m-U23" // put your Google Captcha Key here
-  </script> 
-<script src="assets/replace-vars.js">
-</script>
-
-
-<script>
-
-
+    // keyboard shortcut: press 'e' to focus the page title for quick editing (non-editable by default)
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'e' && (e.metaKey || e.ctrlKey)){
+        const newName = prompt('Set your site title (name):', document.getElementById('your-name').textContent);
+        if(newName) setName(newName);
+      }
+    });
   </script>
-
-<script src="assets/guest-book-WIP.js"></script>
+</body>
+</html>
