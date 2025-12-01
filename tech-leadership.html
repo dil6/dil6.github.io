@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTO Leadership - CreatorIQ ELT Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0f172a;
+            --color-glass-bg: rgba(255, 255, 255, 0.05);
+            --color-glass-border: rgba(255, 255, 255, 0.1);
+            --color-accent-1: #38bdf8; /* Cyan */
+            --color-accent-2: #a78bfa; /* Purple */
+            --color-accent-3: #fbbf24; /* Amber/Gold */
+            --color-text-primary: #f8fafc;
+            --color-text-secondary: #94a3b8;
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--color-text-primary);
+            overflow: hidden; /* Prevent scrolling on body */
+        }
+
+        /* Animated Background Elements */
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: float 10s infinite ease-in-out;
+        }
+        .bg-orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(56, 189, 248, 0.15); /* Cyan */
+            top: -100px;
+            left: -100px;
+        }
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(167, 139, 250, 0.12); /* Purple */
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+         .bg-orb-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(251, 191, 36, 0.08); /* Amber */
+            top: 40%;
+            left: 40%;
+            animation-duration: 15s;
+            animation-delay: -2s;
+        }
+
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 40px); }
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-viewer {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--color-glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-glass);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            padding: 4rem 5rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: scale(0.98); /* Slight zoom effect */
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Typography */
+        .slide-header {
+            margin-bottom: 3rem;
+        }
+
+        .slide-header .label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--color-accent-1), var(--color-accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .slide-header h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .slide-header h3 {
+             font-size: 1.5rem;
+             font-weight: 400;
+             color: var(--color-accent-3);
+             margin-top: 0.5rem;
+        }
+
+
+        .slide-header p {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            font-weight: 300;
+            max-width: 800px;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide.centered {
+            text-align: center;
+            align-items: center;
+        }
+        .slide.centered .slide-header p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* Glass Cards */
+        .row {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .box {
+            flex: 1;
+            padding: 2rem;
+            background: var(--color-glass-bg);
+            border: 1px solid var(--color-glass-border);
+            border-radius: 16px;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle shine effect */
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.5s;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .box:hover::before {
+            left: 125%;
+        }
+
+        .box h4 {
+            color: var(--color-accent-1);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .box p, .box li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        .box ul {
+            padding-left: 1.2rem;
+        }
+        .box li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Arrows */
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-glass-border);
+            font-size: 2rem;
+            font-weight: 100;
+        }
+
+
+        /* Control Bar */
+        .control-bar {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1rem;
+            border-radius: 100px; /* Pill shape */
+            border: 1px solid var(--color-glass-border);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 1.5rem;
+        }
+
+        .nav-button {
+            background: transparent;
+            color: var(--color-text-primary);
+            border: 1px solid transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-family: 'Inter', monospace; /* Monospace numbers */
+            font-variant-numeric: tabular-nums;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent-1), var(--color-accent-2));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+
+<div class="presentation-container">
+    <div class="slide-viewer">
+        
+        <!-- Progress Bar -->
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+        <!-- SLIDE 1: Title -->
+        <section class="slide centered active">
+            <div class="slide-header">
+                <div class="label" style="margin-bottom: 2rem; border: 1px solid rgba(56,189,248,0.3); padding: 0.5rem 1rem; border-radius: 100px;">EXECUTIVE LEADERSHIP TEAM</div>
+                <h2 style="background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5rem;">Technology Leadership<br>for the Next Era</h2>
+                <p style="font-size: 1.25rem; color: var(--color-accent-1); margin-top: 2rem;">A Strategic Perspective from 20 Years Leading Engineering Teams</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: CTO Leadership -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">CTO LEADERSHIP & DECISION MAKING</div>
+                <h2>Scaling Excellence at Enterprise Pace</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4>Strategic Translator</h4>
+                        <p>Convert business imperatives into technology roadmaps. Ensure every engineering dollar maps to customer value.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-2);">Organizational Architect</h4>
+                        <p>Build systems and culture for 60-100+ engineers to move at scale without chaos. Enable autonomy with accountability.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-3);">Platform Steward</h4>
+                        <p>Make long-term architectural decisions to prevent technical debt from becoming a liability. Invest in foundations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: CreatorIQ Opportunity -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">THE CREATORIQ OPPORTUNITY</div>
+                <h2>1,300+ Enterprise Customers</h2>
+                <p>85+ Markets Globally • 22K Campaigns Annually • 10yr Proprietary Data</p>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4>Current Challenge</h4>
+                        <ul>
+                            <li>Legacy systems alongside next-gen</li>
+                            <li>Data fragmentation</li>
+                            <li>Monolithic architecture</li>
+                            <li>Scalability constraints</li>
+                        </ul>
+                    </div>
+                    <div class="box" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.2);">
+                        <h4>Future State</h4>
+                        <ul>
+                            <li>API-first architecture</li>
+                            <li>Unified data layer</li>
+                            <li>Microservices ready</li>
+                            <li>Zero-downtime evolution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Four Pillars -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">MY APPROACH</div>
+                <h2>Four Pillars of Technology Leadership</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row" style="flex-wrap: wrap; row-gap: 1.5rem;">
+                     <div class="box" style="flex: 1 1 40%;">
+                        <h4>Technology & Architecture</h4>
+                        <p>Unify platform, scale infrastructure, build the Creator Graph moat</p>
+                    </div>
+                    <div class="box" style="flex: 1 1 40%;">
+                        <h4 style="color: var(--color-accent-2);">Organization & Culture</h4>
+                        <p>Outcome-driven teams, talent excellence, partnership with Product</p>
+                    </div>
+                    <div class="box" style="flex: 1 1 40%;">
+                        <h4 style="color: var(--color-accent-3);">M&A Integration</h4>
+                        <p>Strategic acquisition framework, technology & team unification</p>
+                    </div>
+                    <div class="box" style="flex: 1 1 40%;">
+                         <h4 style="color: #fff;">Platform Stewardship</h4>
+                        <p>Internal productivity acceleration, external customer value creation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Technology Vision -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">TECHNOLOGY STRATEGY & PILLARS</div>
+                <h2>Modernizing for Enterprise Scale</h2>
+                <h3>Vision: Single Unified Platform</h3>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4>Current Challenge</h4>
+                        <ul>
+                            <li>Legacy systems alongside next-gen</li>
+                            <li>Data fragmentation</li>
+                            <li>Monolithic architecture</li>
+                        </ul>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="box" style="background: rgba(167, 139, 250, 0.08); border-color: rgba(167, 139, 250, 0.2);">
+                        <h4 style="color: var(--color-accent-2);">Future State</h4>
+                        <ul>
+                            <li>API-first architecture</li>
+                            <li>Unified data layer</li>
+                            <li>Microservices ready</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Modernization Strategy -->
+        <section class="slide centered">
+            <div class="slide-header">
+                <h2>Platform Modernization Strategy</h2>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; gap: 1rem; align-items: center; width: 100%;">
+                <div class="box" style="width: 70%; text-align: center; padding: 1.5rem;">
+                    <h4 style="margin-bottom: 0.5rem;">1. Creator Graph</h4>
+                    <p>Unified knowledge base of creators, content, campaigns</p>
+                </div>
+                <div class="arrow" style="font-size: 1.5rem; transform: rotate(90deg);">→</div>
+                 <div class="box" style="width: 70%; text-align: center; padding: 1.5rem;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--color-accent-2);">2. API Facade</h4>
+                    <p>Single interface gradually replacing monolith</p>
+                </div>
+                <div class="arrow" style="font-size: 1.5rem; transform: rotate(90deg);">→</div>
+                 <div class="box" style="width: 70%; text-align: center; padding: 1.5rem; background: rgba(251, 191, 36, 0.05);">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--color-accent-3);">3. Data Infrastructure</h4>
+                    <p>Competitive advantage through actionable intelligence</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Partnership With ELT -->
+        <section class="slide">
+            <div class="slide-header">
+                <h2>Partnership: How I Work With ELT</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4>With Product</h4>
+                        <p>Joint planning on technical roadmap. We debate trade-offs: speed vs. foundation. I don't veto—I inform consequences.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-2);">With Commercial</h4>
+                        <p>Customer pain points flow back to engineering. If Enterprise customers blocked by API limitations, that's a Strategic Bet.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-3);">With Finance</h4>
+                        <p>Technical investments are capital allocation. I show ROI of modernization. Build vs. buy decisions discussed transparently.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- SLIDE 8: Mission Pods -->
+        <section class="slide centered">
+            <div class="slide-header">
+                <div class="label">ARCHITECTURE & ORGANIZATION</div>
+                <h2>Mission Pod Model</h2>
+                <p>Scaling engineering excellence at enterprise pace</p>
+            </div>
+             <div class="slide-content" style="display: flex; flex-direction: row; gap: 1rem; align-items: center; width: 100%;">
+                <div class="box" style="text-align: center;">
+                    <h4 style="margin-bottom: 0.5rem;">Outcomes</h4>
+                    <p>Pods form around business goals, not silos</p>
+                </div>
+                <div class="arrow">→</div>
+                 <div class="box" style="text-align: center;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--color-accent-2);">Autonomy</h4>
+                    <p>Clear ownership & accountability for success</p>
+                </div>
+                <div class="arrow">→</div>
+                 <div class="box" style="text-align: center;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--color-accent-3);">Impact</h4>
+                    <p>Direct connection to customer value</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: M&A Integration -->
+        <section class="slide centered">
+             <div class="slide-header">
+                <div class="label">M&A INTEGRATION PLAYBOOK</div>
+                <h2>Strategic Acquisition Framework</h2>
+            </div>
+            <div class="slide-content" style="width: 80%;">
+                <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 1rem; align-items: center;">
+                    <div style="text-align: center;">
+                         <div style="font-weight: 800; color: var(--color-accent-1); font-size: 1.5rem;">Wk 1-2</div>
+                         <div style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top:0.5rem;">Tech Diligence</div>
+                    </div>
+                    <div class="arrow">→</div>
+                     <div style="text-align: center;">
+                         <div style="font-weight: 800; color: var(--color-accent-2); font-size: 1.5rem;">Wk 3-4</div>
+                         <div style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top:0.5rem;">Culture Align</div>
+                    </div>
+                    <div class="arrow">→</div>
+                     <div style="text-align: center;">
+                         <div style="font-weight: 800; color: var(--color-accent-3); font-size: 1.5rem;">Mo 2-3</div>
+                         <div style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top:0.5rem;">API Integration</div>
+                    </div>
+                    <div class="arrow">→</div>
+                     <div style="text-align: center;">
+                         <div style="font-weight: 800; color: #fff; font-size: 1.5rem;">Mo 4-6</div>
+                         <div style="font-size: 0.8rem; color: var(--color-text-secondary); margin-top:0.5rem;">Full Integration</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- SLIDE 10: AI Strategy -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">AI & INNOVATION STRATEGY</div>
+                <h2>Data as the Competitive Moat</h2>
+                <h3>10 Years of Proprietary Data</h3>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                     <div class="box">
+                        <h4 style="color: var(--color-text-secondary);">The Reality</h4>
+                        <p>Foundation models (GPT, Claude) are commoditizing rapidly.</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="box" style="background: rgba(56, 189, 248, 0.1); border: 1px solid var(--color-accent-1);">
+                        <h4>The Advantage</h4>
+                        <p>Our 10 years of proprietary creator performance data is irreplaceable.</p>
+                    </div>
+                </div>
+                 <div style="margin-top: 2rem; text-align: center; font-size: 1.1rem; color: var(--color-accent-3);">
+                    Strategy: First-mover AI advantage while competitors catch up.
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: Strategic Priorities -->
+        <section class="slide">
+            <div class="slide-header">
+                <h2>Strategic Priorities Framework</h2>
+            </div>
+            <div class="slide-content">
+                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-1);">Quick Wins</h4>
+                        <p>API improvements, AI-assisted search, observability dashboards</p>
+                    </div>
+                    <div class="box" style="border-color: var(--color-accent-3);">
+                        <h4 style="color: var(--color-accent-3);">Strategic Bets</h4>
+                        <p>Multimodal brand safety, platform refactor, APAC expansion</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-text-secondary);">Nice-to-Haves</h4>
+                        <p>Developer convenience tools, minor UI polish</p>
+                    </div>
+                    <div class="box" style="opacity: 0.6;">
+                        <h4 style="color: #ef4444;">Avoid</h4>
+                        <p>Speculative features, premature optimization, vanity metrics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: 2026 Roadmap -->
+        <section class="slide">
+            <div class="slide-header">
+                <h2>2026 Technical Roadmap</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4>Q1-Q2</h4>
+                        <p>API Facade, Discovery Service design & launch</p>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-secondary);">+4 Engineers</div>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-2);">Q3</h4>
+                        <p>Creator Graph v1, Execution Service design</p>
+                         <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-secondary);">+3 Engineers</div>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-3);">Q4</h4>
+                        <p>Execution Service launch, global scale ready</p>
+                         <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-secondary);">Full Team (43)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: Success Metrics -->
+        <section class="slide">
+            <div class="slide-header">
+                <div class="label">YEAR 1 IMPACT</div>
+                <h2>Measuring Engineering Excellence</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box" style="background: linear-gradient(to bottom right, rgba(56, 189, 248, 0.1), transparent);">
+                        <h4>📊 Business Impact</h4>
+                        <ul style="font-size: 1.1rem; font-weight: 600; color: #fff;">
+                            <li>2.5x revenue growth</li>
+                            <li>Enterprise NPS +40</li>
+                            <li>95%+ retention</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--color-accent-2);">⚙️ Technical Metrics</h4>
+                        <ul>
+                            <li>40% latency reduction</li>
+                            <li>80% API adoption</li>
+                            <li>5 AI features live</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: Challenges -->
+        <section class="slide">
+            <div class="slide-header">
+                <h2>Navigating Key Challenges</h2>
+            </div>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="box">
+                        <h4 style="color: #fff;">Technical Debt</h4>
+                        <p>Gradual, zero-downtime migration. API Facade first. No outages.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: #fff;">Innovation vs. Stability</h4>
+                        <p>60% Bets, 20% Wins, 20% Maint. Clear allocation prevents chaos.</p>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: #fff;">Talent</h4>
+                        <p>Mission Pods + modern tech. Best engineers stay when work is meaningful.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- SLIDE 15: Vision -->
+        <section class="slide centered active" style="text-align: center;">
+            <div class="slide-header">
+                <h2 style="font-size: 3rem; margin-bottom: 2rem;">Vision & Commitment</h2>
+            </div>
+            <div class="slide-content" style="max-width: 800px;">
+                <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem; color: #fff;">
+                    "My commitment is building the technology foundation and engineering culture that turns our data advantage into <span style="color: var(--color-accent-1); font-weight: 600;">sustainable competitive moats</span>."
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 20px; font-size: 0.9rem;">Safety</span>
+                    <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 20px; font-size: 0.9rem;">Seamlessness</span>
+                    <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 20px; font-size: 0.9rem;">Scale</span>
+                    <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 20px; font-size: 0.9rem;">Impact</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 16: Discussion -->
+        <section class="slide centered">
+            <div class="slide-header">
+                <h2 style="background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Questions? Let's Discuss</h2>
+            </div>
+            <div class="slide-content">
+                 <div class="box" style="max-width: 700px; margin: 0 auto;">
+                    <h4 style="color: #fff; text-align: center; margin-bottom: 1.5rem;">I'd like to understand your perspective on:</h4>
+                    <ul style="list-style: none; padding: 0; text-align: left;">
+                        <li style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">1. How this roadmap aligns with your business strategy?</li>
+                        <li style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">2. Where do you see the biggest risks?</li>
+                        <li>3. Thoughts on prioritization and trade-offs?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="control-bar">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">
+            <span>←</span> Back
+        </button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
+        </div>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">
+            Next <span>→</span>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const currentSlideEl = document.getElementById('currentSlide');
+    const totalSlidesEl = document.getElementById('totalSlides');
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    totalSlidesEl.textContent = totalSlides;
+
+    function updateProgress() {
+        const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        currentSlideEl.textContent = index + 1;
+
+        // Update Buttons
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === totalSlides - 1;
+
+        updateProgress();
+    }
+
+    function changeSlide(direction) {
+        const newIndex = currentSlideIndex + direction;
+        if (newIndex >= 0 && newIndex < totalSlides) {
+            currentSlideIndex = newIndex;
+            showSlide(currentSlideIndex);
+        }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') changeSlide(1);
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    // Initialize
+    showSlide(0);
+</script>
+
+</body>
+</html>
